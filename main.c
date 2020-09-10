@@ -1,12 +1,11 @@
 
-#include "cy_pdl.h"
 #include "cyhal.h"
 #include "cybsp.h"
 #include "cy_retarget_io.h"
 #include <stdio.h>
 #include "FreeRTOS.h"
 #include "task.h"
-#include "usrcmd.h"
+
 
 volatile int uxTopUsedPriority ;
 TaskHandle_t blinkTaskHandle;
@@ -26,7 +25,6 @@ void blink_task(void *arg)
 
 int main(void)
 {
-    cy_rslt_t result;
     uxTopUsedPriority = configMAX_PRIORITIES - 1 ; // enable OpenOCD Thread Debugging
 
     /* Initialize the device and board peripherals */
@@ -38,7 +36,6 @@ int main(void)
     // Stack size in WORDs
     // Idle task = priority 0
     xTaskCreate(blink_task, "blinkTask", configMINIMAL_STACK_SIZE,0 /* args */ ,0 /* priority */, &blinkTaskHandle);
-    xTaskCreate(usrcmd_task, "nt shell task", configMINIMAL_STACK_SIZE*2,0 /* args */ ,0 /* priority */, 0);
     vTaskStartScheduler();
 }
 
