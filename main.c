@@ -6,10 +6,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-
 volatile int uxTopUsedPriority ;
-TaskHandle_t blinkTaskHandle;
-
 
 void blink_task(void *arg)
 {
@@ -35,7 +32,7 @@ int main(void)
 
     // Stack size in WORDs
     // Idle task = priority 0
-    xTaskCreate(blink_task, "blinkTask", configMINIMAL_STACK_SIZE,0 /* args */ ,0 /* priority */, &blinkTaskHandle);
+    xTaskCreate(blink_task, "blinkTask", configMINIMAL_STACK_SIZE,0 /* args */ ,0 /* priority */, 0 /* handle */);
     vTaskStartScheduler();
 }
 
